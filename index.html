@@ -148,31 +148,36 @@
 
 
     <!--Contact-->
-    <section class="contact" id="contact">
-        <h2 class="h">Contact <span> Me</span></h2>
+<section class="contact" id="contact">
+    <h2 class="h">Contact <span>Me</span></h2>
 
-        <form id="contact-form">
-            <div class="text-box">
-                <label for="fullName" class="visually-hidden">Full Name</label>
-                <input type="text" id="fullName" placeholder="Enter Your Full Name">
-                <input type="text" id="email" placeholder="Enter Your Email">
-            </div>
+    <form id="contact-form" novalidate>
 
-            <div class="text-box">
-                <input type="text" id="phone" placeholder="05xxx">
-            </div>
+        <div class="form-group">
+            <input type="text" id="fullName" placeholder="Enter Your Full Name">
+            <small class="error-message" id="name-error"></small>
+        </div>
 
-            <div class="text-box">
-                <textarea id="message" name="message" cols="30" rows="10" placeholder="Enter Message"></textarea>
-            </div>
+        <div class="form-group">
+            <input type="text" id="email" placeholder="Enter Your Email">
+            <small class="error-message" id="email-error"></small>
+        </div>
 
-            <p id="form-feedback"></p>
+        <div class="form-group">
+            <input type="text" id="phone" placeholder="05xxxxxxxx">
+            <small class="error-message" id="phone-error"></small>
+        </div>
 
-            <div class="text-box">
-                <input type="submit" value="Send Message" class="btn">
-            </div>
-        </form>
-    </section>
+        <div class="form-group">
+            <textarea id="message" rows="8" placeholder="Enter Message"></textarea>
+            <small class="error-message" id="message-error"></small>
+        </div>
+
+        <p id="form-feedback"></p>
+
+        <input type="submit" value="Send Message" class="btn">
+    </form>
+</section>
 
 
 

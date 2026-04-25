@@ -282,7 +282,7 @@
 /* Contact*/
 .contact {
     background: var(--color3);
-    padding: 80px 8%;
+    padding: 100px 8%;
 }
 
 .contact h2 {
@@ -292,43 +292,67 @@
 }
 
 .contact form {
-    max-width: 600px;
+    max-width: 620px;
     margin: auto;
-    text-align: center;
 }
 
-.contact form .text-box {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.form-group {
+    margin-bottom: 1rem;
 }
 
-.contact form input,
-.contact form textarea {
+.contact input,
+.contact textarea {
     width: 100%;
-    padding: 12px;
+    padding: 14px 16px;
     font-size: 1rem;
     border-radius: 10px;
     border: 2px solid var(--color2);
+    background: white;
 }
 
-.contact form textarea {
-    resize: none;
+.contact textarea {
+    resize: vertical;
+    min-height: 180px;
+}
+
+.contact input:focus,
+.contact textarea:focus {
+    box-shadow: 0 0 10px var(--color2);
+}
+
+.error-message {
+    display: block;
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.35rem;
+    min-height: 1.1rem;
+}
+
+.input-error {
+    border-color: red !important;
+}
+
+.input-success {
+    border-color: green !important;
+}
+
+#form-feedback {
+    text-align: center;
+    font-weight: 600;
+    margin: 0.8rem 0;
 }
 
 .contact .btn {
-    margin-top: 1rem;
     width: 100%;
+    cursor: pointer;
+    background: var(--color2);
+    color: black;
+    font-weight: 600;
 }
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+
+.contact .btn:hover {
+    background: white;
+    color: black;
 }
 
 

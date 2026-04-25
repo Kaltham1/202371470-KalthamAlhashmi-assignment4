@@ -15,41 +15,89 @@ const phone = document.getElementById("phone");
 const message = document.getElementById("message");
 const feedback = document.getElementById("form-feedback");
 
-contactForm.addEventListener("submit", function (e) {
-  e.preventDefault();
+const nameError = document.getElementById("name-error");
+const emailError = document.getElementById("email-error");
+const phoneError = document.getElementById("phone-error");
+const messageError = document.getElementById("message-error");
 
-  feedback.textContent = "Sending...";
-  feedback.style.color = "black";
+function showError(input, errorElement, message) {
+    input.classList.add("input-error");
+    input.classList.remove("input-success");
+    errorElement.textContent = message;
+}
 
-  const nameValue = fullName.value.trim();
-  const emailValue = email.value.trim();
-  const phoneValue = phone.value.trim();
-  const messageValue = message.value.trim();
+function showSuccess(input, errorElement) {
+    input.classList.remove("input-error");
+    input.classList.add("input-success");
+    errorElement.textContent = "";
+}
 
-  if (!nameValue || !emailValue || !phoneValue || !messageValue) {
-    feedback.textContent = "Please fill in all fields before sending your message.";
-    feedback.style.color = "red";
-    return;
-  }
+function validateForm() {
+    let isValid = true;
 
-  if (!emailValue.includes("@") || !emailValue.includes(".")) {
-    feedback.textContent = "Please enter a valid email address.";
-    feedback.style.color = "red";
-    return;
-  }
+    const nameValue = fullName.value.trim();
+    const emailValue = email.value.trim();
+    const phoneValue = phone.value.trim();
+    const messageValue = message.value.trim();
 
-  if (!phoneValue.startsWith("05") || phoneValue.length < 10) {
-    feedback.textContent = "Please enter a valid phone number starting with 05.";
-    feedback.style.color = "red";
-    return;
-  }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phonePattern = /^05\d{8}$/;
 
-  feedback.textContent = `Thank you, ${nameValue}! Your message was sent successfully.`;
-  feedback.style.color = "green";
+    if (nameValue.length < 2) {
+        showError(fullName, nameError, "Please enter your full name.");
+        isValid = false;
+    } else {
+        showSuccess(fullName, nameError);
+    }
 
-  contactForm.reset();
+    if (!emailPattern.test(emailValue)) {
+        showError(email, emailError, "Please enter a valid email address, like name@example.com.");
+        isValid = false;
+    } else {
+        showSuccess(email, emailError);
+    }
+
+    if (!phonePattern.test(phoneValue)) {
+        showError(phone, phoneError, "Phone number must start with 05 and contain 10 digits.");
+        isValid = false;
+    } else {
+        showSuccess(phone, phoneError);
+    }
+
+    if (messageValue.length < 10) {
+        showError(message, messageError, "Please enter a message with at least 10 characters.");
+        isValid = false;
+    } else {
+        showSuccess(message, messageError);
+    }
+
+    return isValid;
+}
+
+[fullName, email, phone, message].forEach(input => {
+    input.addEventListener("input", validateForm);
 });
 
+contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const isValid = validateForm();
+
+    if (!isValid) {
+        feedback.textContent = "Please fix the highlighted fields before sending.";
+        feedback.style.color = "red";
+        return;
+    }
+
+    feedback.textContent = `Thank you, ${fullName.value.trim()}! Your message was sent successfully.`;
+    feedback.style.color = "green";
+
+    contactForm.reset();
+
+    [fullName, email, phone, message].forEach(input => {
+        input.classList.remove("input-success", "input-error");
+    });
+});
 
 // Function to fetch and display GitHub repositories
 async function loadGitHubRepos() {
