@@ -1,13 +1,139 @@
+/* =========================
+   Read More / Read Less
+========================= */
 const toggleBtn = document.getElementById("toggle-btn");
-const moreText = document.getElementById("read-more");
+const readMoreText = document.getElementById("read-more");
 
-toggleBtn.addEventListener("click", () => {
-  moreText.classList.toggle("hidden");
-  toggleBtn.textContent = moreText.classList.contains("hidden")
-    ? "Read More"
-    : "Read Less";
-});
+if (toggleBtn && readMoreText) {
+    toggleBtn.addEventListener("click", function () {
+        readMoreText.classList.toggle("hidden");
 
+        if (readMoreText.classList.contains("hidden")) {
+            toggleBtn.textContent = "Read More";
+        } else {
+            toggleBtn.textContent = "Read Less";
+        }
+    });
+}
+
+/* =========================
+   Dark / Light Mode
+========================= */
+const themeToggle = document.getElementById("theme-toggle");
+
+if (themeToggle) {
+    // Apply saved theme when page loads
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+        themeToggle.textContent = "Light Mode";
+    } else {
+        document.body.classList.remove("dark-mode");
+        themeToggle.textContent = "Dark Mode";
+    }
+
+    // Toggle theme when button is clicked
+    themeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+
+        if (document.body.classList.contains("dark-mode")) {
+            themeToggle.textContent = "Light Mode";
+            localStorage.setItem("theme", "dark");
+        } else {
+            themeToggle.textContent = "Dark Mode";
+            localStorage.setItem("theme", "light");
+        }
+    });
+}
+
+/* =========================
+   Project Filtering & Sorting
+========================= */
+const filterSelect = document.getElementById("filter-projects");
+const sortSelect = document.getElementById("sort-projects");
+const projectsList = document.querySelector(".projects-list");
+
+function updateProjects() {
+    if (!filterSelect || !sortSelect || !projectsList) return;
+
+    const selectedCategory = filterSelect.value;
+    const selectedSort = sortSelect.value;
+    const projects = Array.from(projectsList.querySelectorAll(".item"));
+
+    projects.forEach(project => {
+        const category = project.dataset.category;
+
+        if (selectedCategory === "all" || category === selectedCategory) {
+            project.style.display = "flex";
+        } else {
+            project.style.display = "none";
+        }
+    });
+
+    projects.sort((a, b) => {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+
+        if (selectedSort === "newest") {
+            return dateB - dateA;
+        } else {
+            return dateA - dateB;
+        }
+    });
+
+    projects.forEach(project => projectsList.appendChild(project));
+}
+
+if (filterSelect && sortSelect) {
+    filterSelect.addEventListener("change", updateProjects);
+    sortSelect.addEventListener("change", updateProjects);
+    updateProjects();
+}
+
+/* =========================
+   GitHub API Integration
+========================= */
+const githubStatus = document.getElementById("github-status");
+const githubRepos = document.getElementById("github-repos");
+
+async function loadGitHubRepos() {
+    if (!githubStatus || !githubRepos) return;
+
+    try {
+        const response = await fetch("https://api.github.com/users/Kaltham1/repos");
+
+        if (!response.ok) {
+            throw new Error("GitHub repositories could not be loaded.");
+        }
+
+        const repos = await response.json();
+
+        githubStatus.textContent = "";
+        githubRepos.innerHTML = "";
+
+        repos.slice(0, 4).forEach(repo => {
+            const repoCard = document.createElement("div");
+            repoCard.className = "repo-card";
+
+            repoCard.innerHTML = `
+                <h3>${repo.name}</h3>
+                <p>${repo.description || "No description yet."}</p>
+                <p class="repo-meta"><strong>Languages:</strong> ${repo.language || "Not specified"}</p>
+                <p class="repo-meta"><strong>Updated:</strong> ${new Date(repo.updated_at).toLocaleDateString()}</p>
+                <a href="${repo.html_url}" target="_blank" rel="noopener">View Repository</a>
+            `;
+
+            githubRepos.appendChild(repoCard);
+        });
+    } catch (error) {
+        githubStatus.textContent = "Unable to load GitHub repositories. Please try again later.";
+    }
+}
+
+loadGitHubRepos();
+
+/* =========================
+   Contact Form Validation
+========================= */
 const contactForm = document.getElementById("contact-form");
 const fullName = document.getElementById("fullName");
 const email = document.getElementById("email");
@@ -20,10 +146,10 @@ const emailError = document.getElementById("email-error");
 const phoneError = document.getElementById("phone-error");
 const messageError = document.getElementById("message-error");
 
-function showError(input, errorElement, message) {
+function showError(input, errorElement, messageText) {
     input.classList.add("input-error");
     input.classList.remove("input-success");
-    errorElement.textContent = message;
+    errorElement.textContent = messageText;
 }
 
 function showSuccess(input, errorElement) {
@@ -51,7 +177,7 @@ function validateForm() {
     }
 
     if (!emailPattern.test(emailValue)) {
-        showError(email, emailError, "Please enter a valid email address, like name@example.com.");
+        showError(email, emailError, "Please enter a valid email address.");
         isValid = false;
     } else {
         showSuccess(email, emailError);
@@ -74,200 +200,29 @@ function validateForm() {
     return isValid;
 }
 
-[fullName, email, phone, message].forEach(input => {
-    input.addEventListener("input", validateForm);
-});
-
-contactForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const isValid = validateForm();
-
-    if (!isValid) {
-        feedback.textContent = "Please fix the highlighted fields before sending.";
-        feedback.style.color = "red";
-        return;
-    }
-
-    feedback.textContent = `Thank you, ${fullName.value.trim()}! Your message was sent successfully.`;
-    feedback.style.color = "green";
-
-    contactForm.reset();
-
+if (contactForm) {
     [fullName, email, phone, message].forEach(input => {
-        input.classList.remove("input-success", "input-error");
+        input.addEventListener("input", validateForm);
     });
-});
 
-// Function to fetch and display GitHub repositories
-async function loadGitHubRepos() {
-    const status = document.getElementById("github-status");
-    const reposContainer = document.getElementById("github-repos");
+    contactForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    // Safety check
-    if (!status || !reposContainer) return;
+        const isValid = validateForm();
 
-    const username = "Kaltham1";
-    const apiUrl = `https://api.github.com/users/${username}/repos?sort=updated&per_page=6`;
-
-    try {
-        status.textContent = "Loading repositories...";
-
-        // Fetch repos list
-        const response = await fetch(apiUrl);
-
-        if (!response.ok) {
-            throw new Error("Failed to fetch repositories.");
-        }
-
-        const repos = await response.json();
-
-        if (!repos.length) {
-            status.textContent = "No repositories found.";
+        if (!isValid) {
+            feedback.textContent = "Please fix the highlighted fields before sending.";
+            feedback.style.color = "red";
             return;
         }
 
-        // For each repo, fetch its languages
-        const reposWithLanguages = await Promise.all(
-            repos.map(async (repo) => {
-                try {
-                    const langResponse = await fetch(repo.languages_url);
+        feedback.textContent = `Thank you, ${fullName.value.trim()}! Your message was sent successfully.`;
+        feedback.style.color = "green";
 
-                    if (!langResponse.ok) {
-                        throw new Error("Failed to fetch languages.");
-                    }
+        contactForm.reset();
 
-                    const languagesData = await langResponse.json();
-                    const languages = Object.keys(languagesData);
-
-                    return {
-                        ...repo,
-                        languages: languages.length ? languages.join(", ") : "Not specified"
-                    };
-                } catch (error) {
-                    return {
-                        ...repo,
-                        languages: "Not specified"
-                    };
-                }
-            })
-        );
-
-        status.textContent = "";
-
-        // Display repos
-        reposContainer.innerHTML = reposWithLanguages
-            .map(repo => `
-                <div class="repo-card">
-                    <h3>${repo.name}</h3>
-                    <p>${repo.description || "No description yet."}</p>
-                    <div class="repo-meta">
-                        <p><strong>Languages:</strong> ${repo.languages}</p>
-                        <p><strong>Updated:</strong> ${new Date(repo.updated_at).toLocaleDateString()}</p>
-                    </div>
-                    <a href="${repo.html_url}" target="_blank" rel="noopener">View Repository</a>
-                </div>
-            `)
-            .join("");
-
-    } catch (error) {
-        status.textContent = "Unable to load GitHub repositories right now. Please try again later.";
-        reposContainer.innerHTML = "";
-        console.error("GitHub API error:", error);
-    }
-}
-
-// Run function when page loads
-document.addEventListener("DOMContentLoaded", loadGitHubRepos);
-
-
-// Function to handle filtering and sorting of project cards
-function setupProjectControls() {
-    // Get elements from the page
-    const filterSelect = document.getElementById("filter-projects");
-    const sortSelect = document.getElementById("sort-projects");
-    const projectsList = document.querySelector(".projects-list");
-
-    // If elements are not found, stop execution (prevents errors)
-    if (!filterSelect || !sortSelect || !projectsList) return;
-
-    // Convert NodeList of project cards into an array
-    const projectCards = Array.from(projectsList.querySelectorAll(".item"));
-
-    // Function that updates the displayed projects
-    function updateProjects() {
-        // Get current user selections
-        const selectedCategory = filterSelect.value;
-        const selectedSort = sortSelect.value;
-
-        // Step 1: Filter projects based on selected category
-        let visibleProjects = projectCards.filter(card => {
-            const category = card.dataset.category;
-
-            // Show all if "all" is selected, otherwise match category
-            return selectedCategory === "all" || category === selectedCategory;
+        [fullName, email, phone, message].forEach(input => {
+            input.classList.remove("input-success", "input-error");
         });
-
-        // Step 2: Sort projects by date
-        visibleProjects.sort((a, b) => {
-            const dateA = new Date(a.dataset.date);
-            const dateB = new Date(b.dataset.date);
-
-            // If "newest", show latest first, otherwise oldest first
-            return selectedSort === "newest" ? dateB - dateA : dateA - dateB;
-        });
-
-        // Step 3: Clear current project display
-        projectsList.innerHTML = "";
-
-        // Step 4: Re-add filtered and sorted projects to the page
-        visibleProjects.forEach(card => {
-            projectsList.appendChild(card);
-        });
-    }
-
-    // Event listeners: run update when user changes options
-    filterSelect.addEventListener("change", updateProjects);
-    sortSelect.addEventListener("change", updateProjects);
-
-    // Initial run when page loads
-    updateProjects();
-}
-
-// Run the function after the page content is fully loaded
-document.addEventListener("DOMContentLoaded", setupProjectControls);
-
-
-// Function to handle dark/light mode and save the user's choice
-function setupThemeToggle() {
-    const themeButton = document.getElementById("theme-toggle");
-
-    // Stop if button is not found
-    if (!themeButton) return;
-
-    // Check saved theme in localStorage
-    const savedTheme = localStorage.getItem("theme");
-
-    // Apply saved theme when page loads
-    if (savedTheme === "dark") {
-        document.body.classList.add("dark-mode");
-        themeButton.textContent = "Light Mode";
-    }
-
-    // Toggle theme when button is clicked
-    themeButton.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-
-        // Save current theme and update button text
-        if (document.body.classList.contains("dark-mode")) {
-            localStorage.setItem("theme", "dark");
-            themeButton.textContent = "Light Mode";
-        } else {
-            localStorage.setItem("theme", "light");
-            themeButton.textContent = "Dark Mode";
-        }
     });
 }
-
-// Run after page loads
-document.addEventListener("DOMContentLoaded", setupThemeToggle);

@@ -689,3 +689,15 @@ img {
         width: 100%;
     }
 }
+
+/* Fix dark mode toggle button visibility */
+body.dark-mode .theme-btn {
+    background: white;
+    color: black !important;
+    border-color: white;
+}
+
+body.dark-mode .theme-btn:hover {
+    background: var(--color2);
+    color: black !important;
+}
