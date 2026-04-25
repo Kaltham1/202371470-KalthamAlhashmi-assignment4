@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Kaltham Alhashmi Portfolio</title>
+</head>
+
+
+<body>
+    <header class="header">
+        <a href="#home" class="logo">Kaltham Alhashmi</a>
+
+        <i class="bx bx-menu" id="menu-icon"></i>
+        <!--Navigation Bar-->
+        <nav class="navbar">
+            <a href="#home">Home</a>
+            <a href="#abt-me">About Me</a>
+            <a href="#projects">Projects</a>
+            <a href="#github">GitHub</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <!-- Theme toggle button: switches between light and dark mode -->
+        <button id="theme-toggle" class="theme-btn">Dark Mode</button>
+
+    </header>
+
+    <!--Home page-->
+    <section class="home" id="home">
+        <div class="h-img">
+            <img src="assets/personal.jpg" alt="Personal photo">
+        </div>
+
+        <div class="hcontent">
+            <h3>Hello everyone</h3>
+            <h1>Kaltham Alhashmi</h1>
+            <h3>a <span class="multi-text">SWE Student </span><span class="kfupm">at KFUPM</span></h3>
+            <p>I'm a software engineering student who enjoys solving problems,</p>
+            <p>exploring new technologies, and turning ideas into simple web experiences.</p>
+
+            <div class="media">
+                <div class="media">
+                    <a href="https://www.linkedin.com/in/kaltham-alhashmi-909a18283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                        target="_blank" rel="noopener"><i class="bx bxl-linkedin"></i></a>
+                    <a href="https://github.com/Kaltham1" target="_blank" rel="noopener"><i
+                            class="bx bxl-github"></i></a>
+                </div>
+            </div>
+            <a href="assets/Kaltham_Alhashmi_CV.txt" download="Kaltham_Alhashmi_CV" class="btn">Check CV</a>
+
+        </div>
+
+
+    </section>
+
+    <!--About Me-->
+    <section class="abt-me" id="abt-me">
+        <div class="abt-content">
+            <h2 class="h">About <span>Me</span></h2>
+            <p>I'm a software engineering student who enjoys learning new things in and out of my field. Alongside</p>
+            <p>building simple web projects, I sing, paint, create and edit videos, and love trying new adventures.</p>
+
+            <button id="toggle-btn" class="btn1">Read More</button>
+        </div>
+
+        <div>
+            <div class="abt-img">
+                <img src="assets/about.png" alt="About Image">
+            </div>
+        </div>
+
+        <p id="read-more" class="hidden">During my school years, I participated in several research projects and summer
+            courses in
+            biomedical science, including topics such as xenotransplantation, pandemics and epidemics, the effect of
+            light colors on plants, and methods to slow down potato rotting. Later, I took part in the Informatics
+            Olympiad with Mawhiba using C++, which is when I realized my interest in programming and decided to pursue a
+            career related to development.</p>
+
+
+    </section>
+
+    <!--Projects-->
+    <section class="projects" id="projects">
+
+        <div class="proj-content">
+            <h2 class="h">My <span>Projects</span></h2>
+
+            <!-- Project controls: filter by category and sort by date -->
+            <div class="project-controls">
+                <label for="filter-projects">Filter:</label>
+                <select id="filter-projects">
+                    <option value="all">All</option>
+                    <option value="web">Web</option>
+                    <option value="database">Database</option>
+                    <option value="ai">AI</option>
+                </select>
+
+                <label for="sort-projects">Sort by date:</label>
+                <select id="sort-projects">
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                </select>
+            </div>
+
+            <!-- Project cards container (updated dynamically using JavaScript) -->
+            <div class="projects-list">
+                <!-- FlexLeave -->
+                <div class="item" data-category="web" data-date="2025-03-01">
+                    <h3 class="card-title">FlexLeave</h3>
+                    <img src="assets/FlexLeave.png" alt="FlexLeave">
+                    <p class="card-text">FlexLeave is a web-based leave management system that helps employees submit
+                        leave requests and enables managers to review and approve them efficiently.</p>
+                </div>
+
+                <!-- Horse Racing -->
+                <div class="item" data-category="database" data-date="2024-11-01">
+                    <h3 class="card-title">Horse Racing Database System</h3>
+                    <img src="assets/houreDBMS.png" alt="Horse Racing DBMS">
+                    <p class="card-text">The Horse Racing Database System is a database-driven application that manages
+                        horse racing data, including horses, races, jockeys, owners, and results, to support efficient
+                        tracking, querying, and analysis.</p>
+                </div>
+
+                <!-- Co-pilot -->
+                <div class="item" data-category="ai" data-date="2025-04-01">
+                    <h3 class="card-title">Academic co-pilot</h3>
+                    <img src="assets/Academic_CoPilot.png" alt="Academic co-pilot">
+                    <p class="card-text">An AI-driven learning assistant that supports students and instructors through
+                        smart study tools, automated content generation, analytics, and seamless integration with KFUPM
+                        systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- GitHub API section: dynamically loads repositories -->
+    <section class="github-section" id="github">
+        <h2 class="h">GitHub <span>Projects</span></h2>
+
+        <div id="github-status" class="github-status">Loading repositories...</div>
+        <div id="github-repos" class="github-repos"></div>
+    </section>
+
+
+    <!--Contact-->
+    <section class="contact" id="contact">
+        <h2 class="h">Contact <span> Me</span></h2>
+
+        <form id="contact-form">
+            <div class="text-box">
+                <label for="fullName" class="visually-hidden">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter Your Full Name">
+                <input type="text" id="email" placeholder="Enter Your Email">
+            </div>
+
+            <div class="text-box">
+                <input type="text" id="phone" placeholder="05xxx">
+            </div>
+
+            <div class="text-box">
+                <textarea id="message" name="message" cols="30" rows="10" placeholder="Enter Message"></textarea>
+            </div>
+
+            <p id="form-feedback"></p>
+
+            <div class="text-box">
+                <input type="submit" value="Send Message" class="btn">
+            </div>
+        </form>
+    </section>
+
+
+
+
+
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
