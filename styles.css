@@ -1,0 +1,509 @@
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: -apple-system, sans-serif;
+    
+}
+
+:root{
+    --color1: #9bc7fa; 
+    --color2: #9bd7fa;
+    --color3: #ebf4fa; 
+}
+
+.header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 5%;
+    background: var(--color2);
+    backdrop-filter: blur(10px);
+    transition: all 1s ease;
+
+
+
+}
+
+.logo{
+    font-size: 2rem;
+    color: azure;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.logo:hover{
+    transform: scale(1.1);
+}
+.navbar a {
+    font-size: 1.3rem;
+    color: azure;
+    margin-left: 3rem;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+.navbar a:hover, .navbar a.active {
+    color: black;
+}
+
+#menu-icon {
+    font-size: 3rem;
+    color: azure;
+    cursor: pointer;
+    display: none;
+}
+
+
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 120px;
+    min-height: 100vh;
+}
+
+.h-img img{
+    width: 25vw;
+    border-radius: 100%;
+    box-shadow: 0 0 25px var(--color2);
+    animation: floatImage 4s ease-in-out infinite;
+    transition: 0.4s ease;
+
+}
+
+.h-img img:hover {
+    box-shadow: 0 0 25px var(--color2), 0 0 35px var(--color2), 0 0 45px var(--color2)
+}
+/* used the help of google to learn how to make a picture float(@keyframes)*/
+@keyframes floatImage{
+    0% {
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-2.4rem);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+
+.hcontent {
+    margin-left: 5rem;
+}
+.hcontent h3 {
+    font-size: 3.5rem;
+    font-weight: 500;
+}
+/*selecting the second item of h3 in hcontent */
+.hcontent h3:nth-of-type(2) {
+    margin-bottom: 2rem;
+}
+
+.h span {
+    color: var(--color2);
+}
+
+.kfupm{
+    font-size: 2rem;
+    color:black;
+}
+
+.hcontent h1{
+    font-size: 5rem;
+    font-weight: 500;
+}
+.hcontent p:nth-of-type(2){
+   margin-bottom: 0.6rem;
+   
+}
+.media a{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    width: 50px;
+    height: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 0.1rem solid var(--color2);
+    border-radius: 100%;
+    font-size: 2rem;
+    color:black;
+}
+
+.media a:hover{
+    background-color: var(--color2);
+    color:azure;
+    transform: scale(0.6);
+    box-shadow: 0 0 25px var(--color2);
+    
+}
+
+.btn{
+    display: inline-flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10%;
+    font-size: 1rem;
+    color:black;
+   border: 0.1rem solid var(--color2);
+   margin-top: 0.5rem;
+}
+.btn:hover{
+    background-color: var(--color2);
+    color:azure;  
+    box-shadow: 0 0 25px var(--color2);
+    transform: scale(0.7);
+}
+
+/* Avout Me */
+
+.abt-me {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background: var(--color3);
+    min-height: 80vh;   
+    padding: 100px 8%; 
+}
+.abt-content p:nth-of-type(2) {
+    margin-bottom: 2rem;
+}
+.btn1 {
+    color: white;
+    background-color: var(--color2);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10%;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+.btn1:hover{
+    box-shadow: 0 0 25px var(--color2);
+    transform: scale(0.7);
+}
+.abt-img img{
+  width: 25vw;
+  max-width: 1000px;
+  min-width: 700px;
+  height: auto;
+  box-shadow: 0 0 25px var(--color2);
+  
+}
+.abt-img img:hover{
+    box-shadow: 0 0 25px var(--color2), 0 0 35px var(--color2), 0 0 45px var(--color2)
+}
+
+.h{
+    font-size: 5rem;
+    text-align: center;
+}
+
+.abt-content{
+    padding: 0.3rem;
+}
+
+.abt-content h2{
+    text-align: left;
+    line-height: 1.5;
+}
+.hidden {
+    display: none;
+}
+#read-more {
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+/*got help here: the problem was that it was not the case
+ (when the screen shrinks, the image + text stay side-by-side and break the layout.)*/
+@media (max-width: 768px) {
+  .abt-me {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+/*Project*/
+.proj-content h2{
+    margin-top: 100px;
+    text-align: center;
+}
+.item{
+    display: flex;
+    width: 350px;
+    margin: 2rem 20px;
+    background: var(--color3);
+    border: 2px solid var(--color2);
+    border-radius: 15px;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 25px var(--color2);
+}
+.item:hover{
+    box-shadow: 0 0 25px var(--color2), 0 0 35px var(--color2), 0 0 45px var(--color2)
+}
+
+.card-title{
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    text-shadow: 2px 2px var(--color2);
+}
+
+.item img{
+     width: 25vw;
+  max-width: 100px;
+  min-width: 70px;
+  height: auto;
+  box-shadow: 0 0 25px var(--color2);
+  margin-bottom: 50px;
+  border-radius: 15px;
+}
+
+.card-text{
+    align-items: center;
+    text-align: center;
+    margin-left: 5px;
+    margin-top: -40px;
+    margin-bottom: 10px;
+}
+
+/* Contact*/
+.contact {
+    background: var(--color3);
+    padding: 80px 8%;
+}
+
+.contact h2 {
+    margin-bottom: 2rem;
+    color: var(--color2);
+    text-align: center;
+}
+
+.contact form {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+}
+
+.contact form .text-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact form input,
+.contact form textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid var(--color2);
+}
+
+.contact form textarea {
+    resize: none;
+}
+
+.contact .btn {
+    margin-top: 1rem;
+    width: 100%;
+}
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
+/*GitHub API section: dynamically loads repositories */ 
+.github-section {
+    padding: 80px 8%;
+    background: #fff;
+    text-align: center;
+}
+
+.github-status {
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.github-repos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.repo-card {
+    background: var(--color3);
+    border: 2px solid var(--color2);
+    border-radius: 15px;
+    padding: 1.2rem;
+    text-align: left;
+    box-shadow: 0 0 15px var(--color2);
+    transition: 0.3s ease;
+}
+
+.repo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px var(--color2);
+}
+
+.repo-card h3 {
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+.repo-card p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.repo-card a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: black;
+    font-weight: 600;
+}
+
+.repo-meta {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Project controls (filter + sort) */
+.project-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin: 2rem 0 1rem 100px;
+}
+
+.project-controls label {
+    font-weight: 600;
+}
+
+.project-controls select {
+    padding: 0.6rem;
+    border: 2px solid var(--color2);
+    border-radius: 8px;
+    background: white;
+}
+
+/* Projects container (keeps your current layout) */
+.projects-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Theme toggle button */
+.theme-btn {
+    padding: 0.6rem 1rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.theme-btn:hover {
+    background: white;
+    color: black;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Header */
+body.dark-mode .header {
+    background: #1f1f1f;
+}
+
+/* Text colors */
+body.dark-mode .navbar a,
+body.dark-mode .logo,
+body.dark-mode .kfupm,
+body.dark-mode .media a,
+body.dark-mode .hcontent h1,
+body.dark-mode .hcontent h3,
+body.dark-mode .abt-content,
+body.dark-mode .card-title,
+body.dark-mode .card-text,
+body.dark-mode .contact h2,
+body.dark-mode .h {
+    color: white;
+}
+
+/* Section backgrounds (VERY IMPORTANT FIX) */
+body.dark-mode .abt-me,
+body.dark-mode .contact,
+body.dark-mode .projects,
+body.dark-mode .github-section {
+    background: #1e1e1e;
+}
+
+/* Project cards */
+body.dark-mode .item {
+    background: #1e1e1e;
+    color: white;
+    border-color: var(--color2);
+}
+
+/* Form inputs */
+body.dark-mode .contact form input,
+body.dark-mode .contact form textarea {
+    background: #1e1e1e;
+    color: white;
+    border-color: var(--color2);
+}
+
+/* Dropdowns */
+body.dark-mode .project-controls select {
+    background: #1e1e1e;
+    color: white;
+    border: 2px solid var(--color2);
+}
+
+/* GitHub cards */
+body.dark-mode .repo-card {
+    background: #1e1e1e;
+    color: white;
+}
+
+body.dark-mode .repo-card h3,
+body.dark-mode .repo-card p,
+body.dark-mode .repo-meta,
+body.dark-mode .repo-card a {
+    color: white;
+}
+
+/* Buttons */
+body.dark-mode .btn,
+body.dark-mode .theme-btn {
+    color: white;
+    border-color: white;
+}
